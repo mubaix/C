@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string.h>
+#include <ctype.h>
 int main()
 {
     char key[225] = {0};     //密钥
