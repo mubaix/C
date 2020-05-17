@@ -5,7 +5,6 @@ int main()
     char key[225] = {0};     //密钥
     char miwen[225] = {0};   //密文
     char mingwen[225] = {0}; //明文
-    int len;
     printf("please input mingwen:");
     gets(mingwen);
     printf("please input key:");
