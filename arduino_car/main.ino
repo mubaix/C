@@ -14,8 +14,14 @@ void setup()
 {
     pinMode(LeftAin1, OUTPUT);
     pinMode(LeftAin2, OUTPUT);
+    pinMode(LeftPWM, OUTPUT);
     pinMode(RightAin1, OUTPUT);
     pinMode(RightAin2, OUTPUT);
+    pinMode(RightPWM, OUTPUT);
+    pinMode(S0,INPUT);
+    pinMode(S1,INPUT);
+    pinMode(S2,INPUT);
+    pinMode(S3,INPUT);
     Serial.begin(9600);
 }
 
@@ -116,7 +122,7 @@ void followLine(int speed)
         digitalWrite(LeftAin2, LOW);
     }
 
-    delay(5); //调整控制周期对微分作用很重要！
+    delay(10); //调整控制周期对微分作用很重要！
 }
 
 
