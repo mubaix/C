@@ -1,4 +1,4 @@
-const int LeftAin1 = 1;
+const int LeftAin1 = 6;
 const int LeftAin2 = 7;
 const int LeftPWM = 9;
 const int RightAin1 = 8;
@@ -12,16 +12,10 @@ const int S3 = 5;
 
 void setup()
 {
-    pinMode(1, OUTPUT);
-    pinMode(7, OUTPUT);
-    pinMode(8, OUTPUT);
-    pinMode(12, OUTPUT);
-    pinMode(9,OUTPUT);
-    pinMode(10,OUTPUT);
-    pinMode(2,INPUT);
-    pinMode(3,INPUT);
-    pinMode(4,INPUT);
-    pinMode(5,INPUT);
+    pinMode(LeftAin1, OUTPUT);
+    pinMode(LeftAin2, OUTPUT);
+    pinMode(RightAin1, OUTPUT);
+    pinMode(RightAin2, OUTPUT);
     Serial.begin(9600);
 }
 
@@ -35,30 +29,31 @@ int readSensor(void)
     sensor |= digitalRead(S2);
     sensor <<= 1;
     sensor |= digitalRead(S3);
+
     switch (sensor)
     {
-    case 0x06: //S0S1S2S3=0110 线上
+    case 0x06:              //0110 线上
         error = 0;
         break;
-    case 0x04: //S0S1S2S3=0100 小偏左
+    case 0x04:              //0100 小偏左
         error = 5;
         break;
-    case 0x0c: //S0S1S2S3=1100 中偏左
+    case 0x0c:              //1100 中偏左
         error = 10;
         break;
-    case 0x08: //S0S1S2S3=1000 大偏左
+    case 0x08:              //1000 大偏左
         error = 20;
         break;
-    case 0x02: //S0S1S2S3=0010 小偏右
+    case 0x02:              //0010 小偏右
         error = -5;
         break;
-    case 0x03: //S0S1S2S3=0011 中偏右
+    case 0x03:              //0011 中偏右
         error = -10;
         break;
-    case 0x01: //S0S1S2S3=0001 大偏右
+    case 0x01:              //0001 大偏右
         error = -20;
         break;
-    default: //其他，不在线上
+    default:                //其他，不在线上
         error = 0x200;
         break;
     }
