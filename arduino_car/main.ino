@@ -27,16 +27,16 @@ void setup()
 
 int readSensor(void)
 {
-    int sensor, error;
-    sensor = digitalRead(S0);
-    sensor <<= 1;
-    sensor |= digitalRead(S1);
-    sensor <<= 1;
-    sensor |= digitalRead(S2);
-    sensor <<= 1;
-    sensor |= digitalRead(S3);
+    int error;
+    error = digitalRead(S0);
+    error <<= 1;
+    error |= digitalRead(S1);
+    error <<= 1;
+    error |= digitalRead(S2);
+    error <<= 1;
+    error |= digitalRead(S3);
 
-    switch (sensor)
+    switch (error)
     {
     case 0x06:              //0110 线上
         error = 0;
