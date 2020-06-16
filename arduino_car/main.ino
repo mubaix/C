@@ -12,10 +12,16 @@ const int S3 = 5;
 
 void setup()
 {
-    pinMode(LeftAin1, OUTPUT);
-    pinMode(LeftAin2, OUTPUT);
-    pinMode(RightAin1, OUTPUT);
-    pinMode(RightAin2, OUTPUT);
+    pinMode(1, OUTPUT);
+    pinMode(7, OUTPUT);
+    pinMode(8, OUTPUT);
+    pinMode(12, OUTPUT);
+    pinMode(9,OUTPUT);
+    pinMode(10,OUTPUT);
+    pinMode(2,INPUT);
+    pinMode(3,INPUT);
+    pinMode(4,INPUT);
+    pinMode(5,INPUT);
     Serial.begin(9600);
 }
 
@@ -121,5 +127,5 @@ void followLine(int speed)
 
 void loop()
 {
-    followLine(75); //以PWM值=75(百分数）的速度寻线                    
+    followLine(100); //以PWM值=75(百分数）的速度寻线                    
 }
