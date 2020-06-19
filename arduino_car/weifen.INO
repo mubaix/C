@@ -30,17 +30,19 @@ void loop()
     followLine(100);
 }
 
-int readSensor(int error)
+int readSensor(void)
 {
-    error = digitalRead(S0);
-    error <<= 1;
-    error |= digitalRead(S1);
-    error <<= 1;
-    error |= digitalRead(S2);
-    error <<= 1;
-    error |= digitalRead(S3);
-
-    switch (error)
+    int error, sensor;
+    sensor = digitalRead(S0);
+    sensor <<= 1;
+    sensor |= digitalRead(S1);
+    sensor <<= 1;
+    sensor |= digitalRead(S2);
+    sensor <<= 1;
+    sensor |= digitalRead(S3);
+    Serial.print("sensor= ");
+    Serial.println(sensor);
+    switch (sensor)
     {
     case 0x06: //0110 线上
         error = 0;
@@ -72,21 +74,21 @@ int readSensor(int error)
 
 void followLine(int speed)
 {
-    int err_new, diffE, left, right, out;
-    int err_old = 0;
-    err_new = readSensor();
+
+    int err_new,err_old=0 , left, right, out;
+    int diffE;                  //偏差的时间变化率
+    err_new=readSensor();
     diffE=(err_new-err_old)*1000;
+    err_old=err_new;
+
     if (err_new < 100) //判断的是传感器的误差值是不是在争取的范围内
     {
-        out =  err_new * diffE; //计算当前比例控制量
+        out = diffE * err_new; //计算当前比例控制量
         left = speed + out;
         right = speed - out;                //处理，根据控制量计算左右电机的输出
         left = constrain(left, -100, +100); //对计算结果进行限幅处理
         right = constrain(right, -100, +100);
-        Serial.print("left=");
-        Serial.println(left);
-        Serial.print("right=");
-        Serial.println(right);
+
 
         if (left >= 0) //判断控制量的正负号，控制左电机的转向
         {
