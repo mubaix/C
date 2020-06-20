@@ -25,11 +25,6 @@ void setup()
     Serial.begin(9600);
 }
 
-void loop()
-{
-    followLine(100);
-}
-
 int readSensor(void)
 {
     int error, sensor;
@@ -44,33 +39,51 @@ int readSensor(void)
     Serial.println(sensor);
     switch (sensor)
     {
-    case 0x06: //0110 线上
+    case 6: //0110 线上
         error = 0;
+        Serial.print("error= ");
+    Serial.println(error);
         break;
-    case 0x04: //0100 小偏左
-        error = 5;
-        break;
-    case 0x0c: //1100 中偏左
-        error = 10;
-        break;
-    case 0x08: //1000 大偏左
-        error = 20;
-        break;
-    case 0x02: //0010 小偏右
+    case 4: //0100 小偏左
         error = -5;
+        Serial.print("error= ");
+    Serial.println(error);
         break;
-    case 0x03: //0011 中偏右
+    case 12: //1100 中偏左
         error = -10;
+        Serial.print("error= ");
+    Serial.println(error);
         break;
-    case 0x01: //0001 大偏右
+    case 8: //1000 大偏左
         error = -20;
+        Serial.print("error= ");
+    Serial.println(error);
+        break;
+    case 2: //0010 小偏右
+        error = 5;
+        Serial.print("error= ");
+    Serial.println(error);
+        break;
+    case 3: //0011 中偏右
+        error = 10;
+        Serial.print("error= ");
+    Serial.println(error);
+        break;
+    case 1: //0001 大偏右
+        error = 20;
+        Serial.print("error= ");
+    Serial.println(error);
         break;
     default: //其他，不在线上
         error = 0xffff;
+        Serial.print("error= ");
+    Serial.println(error);
         break;
     }
+
     return error;
 }
+
 
 void followLine(int speed)
 {
@@ -78,7 +91,7 @@ void followLine(int speed)
     int Kp = 5;
     err = readSensor();
 
-    if (err <= 100) //判断的是传感器的误差值是不是在争取的范围内
+    if (err < 100) //判断的是传感器的误差值是不是在争取的范围内
     {
         out = Kp * err; //计算当前比例控制量
         left = speed + out;
@@ -124,6 +137,12 @@ void followLine(int speed)
         digitalWrite(LeftAin1, LOW); //停止左电机
         digitalWrite(LeftAin2, LOW);
     }
-
-    delay(5); //调整控制周期对微分作用很重要！
+    delay(10);
 }
+
+void loop()
+{
+    followLine(75);
+}
+
+
