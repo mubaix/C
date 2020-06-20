@@ -144,5 +144,3 @@ void loop()
 {
     followLine(75);
 }
-
-
