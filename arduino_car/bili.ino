@@ -78,7 +78,7 @@ void followLine(int speed)
     int Kp = 5;
     err = readSensor();
 
-    if (err < 100) //判断的是传感器的误差值是不是在争取的范围内
+    if (err <= 100) //判断的是传感器的误差值是不是在争取的范围内
     {
         out = Kp * err; //计算当前比例控制量
         left = speed + out;
