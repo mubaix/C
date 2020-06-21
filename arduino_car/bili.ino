@@ -2,13 +2,16 @@ const int LeftAin1 = 6;
 const int LeftAin2 = 7;
 const int LeftPWM = 9;
 const int RightAin1 = 8;
-const int RightAin2 = 12;
+const int RightAin2 = 11;
 const int RightPWM = 10;
 
 const int S0 = 2;
 const int S1 = 3;
 const int S2 = 4;
 const int S3 = 5;
+
+int readSensor(void);
+void followLine();
 
 void setup()
 {
@@ -35,48 +38,50 @@ int readSensor(void)
     sensor |= digitalRead(S2);
     sensor <<= 1;
     sensor |= digitalRead(S3);
+
     Serial.print("sensor= ");
     Serial.println(sensor);
+
     switch (sensor)
     {
-    case 6: //0110 线上
+    case 0x06: //0110 线上
         error = 0;
-        Serial.print("error= ");
+    Serial.print("error= ");
     Serial.println(error);
         break;
-    case 4: //0100 小偏左
-        error = -5;
-        Serial.print("error= ");
-    Serial.println(error);
-        break;
-    case 12: //1100 中偏左
-        error = -10;
-        Serial.print("error= ");
-    Serial.println(error);
-        break;
-    case 8: //1000 大偏左
-        error = -20;
-        Serial.print("error= ");
-    Serial.println(error);
-        break;
-    case 2: //0010 小偏右
+    case 0x04: //0100 小偏左
         error = 5;
-        Serial.print("error= ");
+    Serial.print("error= ");
     Serial.println(error);
         break;
-    case 3: //0011 中偏右
+    case 0x0c: //1100 中偏左
         error = 10;
-        Serial.print("error= ");
+    Serial.print("error= ");
     Serial.println(error);
         break;
-    case 1: //0001 大偏右
+    case 0x08: //1000 大偏左
         error = 20;
-        Serial.print("error= ");
+    Serial.print("error= ");
+    Serial.println(error);
+        break;
+    case 0x02: //0010 小偏右
+        error = -5;
+    Serial.print("error= ");
+    Serial.println(error);
+        break;
+    case 0x03: //0011 中偏右
+        error = -10;
+    Serial.print("error= ");
+    Serial.println(error);
+        break;
+    case 0x01: //0001 大偏右
+        error = -20;
+    Serial.print("error= ");
     Serial.println(error);
         break;
     default: //其他，不在线上
         error = 0xffff;
-        Serial.print("error= ");
+    Serial.print("error= ");
     Serial.println(error);
         break;
     }
@@ -137,7 +142,7 @@ void followLine(int speed)
         digitalWrite(LeftAin1, LOW); //停止左电机
         digitalWrite(LeftAin2, LOW);
     }
-    delay(10);
+
 }
 
 void loop()
