@@ -93,7 +93,7 @@ int readSensor(void)
 void followLine(int speed)
 {
     int err, left, right, out;
-    int Kp = 5;
+    int Kp = 4;
     err = readSensor();
 
     if (err < 100) //判断的是传感器的误差值是不是在争取的范围内
@@ -131,8 +131,8 @@ void followLine(int speed)
             right = -right;
         }
 
-        analogWrite(LeftPWM, left * 255 / 100);   //输出到左电机，将百分比转换成0~255的输出
-        analogWrite(RightPWM, right * 255 / 100); //输出到右电机
+        analogWrite(LeftPWM, left * 255 / 120);   //输出到左电机，将百分比转换成0~255的输出
+        analogWrite(RightPWM, right * 255 / 120); //输出到右电机
     }
 
     else //电机不在线上
@@ -147,5 +147,5 @@ void followLine(int speed)
 
 void loop()
 {
-    followLine(75);
+    followLine(60);
 }
